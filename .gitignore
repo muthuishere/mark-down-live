@@ -1,0 +1,8 @@
+/node_modules/
+/.idea/.gitignore
+/.idea/jsLibraryMappings.xml
+/.idea/modules.xml
+/.idea/slidepresenter.iml
+/.idea/vcs.xml
+/logs/app.log
+/logs/error.log

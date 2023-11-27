@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://unpkg.com/fabric@5.3.0/dist/fabric.min.js"></script>
+</head>
+<body>
+
+<canvas id="myCanvas" width="800" height="600"></canvas>
+
+<script>
+
+    function getPathLength(pathData) {
+        var svgPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        svgPath.setAttribute("d", pathData);
+        return svgPath.getTotalLength();
+    }
+
+    function init(){
+    var canvas = new fabric.Canvas('myCanvas');
+
+    var path = new fabric.Path('M 0 0 L 200 100', { fill: '', stroke: 'black', objectCaching: false });
+    canvas.add(path);
+
+    fabric.Image.fromURL('hand-icon.png', function(handIcon) {
+        handIcon.set({
+            left: 0,
+            top: 0,
+            scaleX: 0.05,
+            scaleX: 0.05
+        });
+        canvas.add(handIcon);
+
+        var length =  getPathLength(path.toSVG());
+
+        console.log(path);
+        console.log(length);
+        path.set({ strokeDashArray: [length, length], strokeDashOffset: length });
+
+        fabric.util.animate({
+            startValue: length,
+            endValue: 0,
+            duration: 2000,
+            onChange: function(value) {
+                path.strokeDashOffset = value;
+                var point = path.getPointAtLength(length - value);
+                handIcon.set({ left: point.x, top: point.y });
+                canvas.renderAll();
+            }
+        });
+    });
+
+    }
+    init()
+</script>
+
+</body>
+</html>

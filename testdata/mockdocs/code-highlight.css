@@ -1,0 +1,22 @@
+/* Dark theme for inline code */
+ code {
+    background-color: #282c34; /* Dark background */
+    color: #abb2bf; /* Light text color */
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+}
+
+/* Dark theme for code blocks */
+ pre > code {
+    background-color: #282c34; /* Dark background */
+    color: #abb2bf; /* Light text color */
+    display: block;
+    padding: 1em;
+    border-radius: 5px;
+}
+
+/* Optional: Colors for common syntax highlighting (you can expand this as needed) */
+ pre > code .keyword { color: #c678dd; } /* Purple */
+ pre > code .string { color: #98c379; } /* Green */
+ pre > code .function { color: #61afef; } /* Blue */
+ pre > code .comment { color: #5c6370; } /* Grey comment */
