@@ -1,33 +1,39 @@
 import fs from 'fs';
 import {formatAndBuild} from "./slideformatter.js";
 import {getFullPath} from "./shared/os_utils.js";
+import path from "path";
+
 let timeout;
 let watcher
 
 
-export function watchFile(filename){
+export function watchFile(filename) {
 
     formatAndBuild(filename)
 
 
+    watcher = fs.watch(filename, (eventType, currentFile) => {
 
-     watcher  =fs.watch(filename, (eventType, currentFile) => {
+        const inp = getFullPath(currentFile)
+        const isSameFile = filename === inp;
 
-         const inp = getFullPath(currentFile)
-         const isSameFile = filename === inp;
+        // get only file name from path
 
-         console.log(`Event type is: ${eventType} Filename provided: ${filename} arrived ${inp} Same file: ${isSameFile}`);
-        if (isSameFile == false){
-             console.log("Ignoring this file change event")
-             return;
-         }
+        const basename = path.basename(filename)
 
-         console.log("File changed, formatting and building")
+        if (isSameFile == false) {
+
+            console.log(`Ignoring Event type is: ${eventType} Filename provided: ${basename} Same file: ${isSameFile}`);
+
+            return;
+        }
+
+        console.log(`File changed Event type is: ${eventType} Filename provided: ${basename} Same file: ${isSameFile}`);
         if (timeout) {
             clearTimeout(timeout);
         }
 
-        timeout = setTimeout(()=>{
+        timeout = setTimeout(() => {
 
             formatAndBuild(filename)
         }, 1000); // Wait for 2 seconds after the last change
