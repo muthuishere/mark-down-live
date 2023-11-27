@@ -19,7 +19,29 @@ A high level Overview on What is programming and what are all the topics you sho
 ---
 Modules
 
-###CONTENTS###
+1. [Introduction to Programming](#1---introduction-to-programming)
+1. [Programming Languages](#2---programming-languages)
+1. [History of Programming](#3---history-of-programming)
+1. [Understanding Code Structure](#4---understanding-code-structure)
+1. [Algorithms and Logic](#5---algorithms-and-logic)
+1. [Control Structures](#6---control-structures)
+1. [Debugging and Error Handling](#7---debugging-and-error-handling)
+1. [Development Environments](#8---development-environments)
+1. [Version Control Systems](#9---version-control-systems)
+1. [Data Structures](#11---data-structures)
+1. [Object](#12---object-oriented-programming-(oop))
+1. [Functional Programming](#13---functional-programming)
+1. [Event](#14---event-driven-programming)
+1. [Concurrent and Parallel Programming](#15---concurrent-and-parallel-programming)
+1. [Web Development](#16---web-development)
+1. [Mobile App Development](#17---mobile-app-development)
+1. [Database Management](#18---database-management)
+1. [Security in Programming](#19---security-in-programming)
+1. [Continuous Integration/Continuous Deployment (CI/CD)](#21---continuous-integration/continuous-deployment-(ci/cd))
+1. [Cloud Computing](#22---cloud-computing)
+1. [Open Source Software](#23---open-source-software)
+1. [Programming Communities](#24---programming-communities)
+1. [The Future of Programming](#25---the-future-of-programming)
 
 
 ---

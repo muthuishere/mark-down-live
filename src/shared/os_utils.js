@@ -1,7 +1,7 @@
 import {exec, spawn} from 'child_process'
 import commandExists from "command-exists";
 import {fileURLToPath} from "url";
-import Path from "path";
+
 import path from "path";
 import os from "os";
 import fs from 'fs';
@@ -52,12 +52,16 @@ return fs.existsSync(file)
 
 export function getCurrentProjectFolder(){
     const __filename = fileURLToPath(import.meta.url);
-    const dirname = Path.dirname(__filename);
-    const folder =     Path.resolve(dirname, '../../')
+    const dirname = path.dirname(__filename);
+    const folder =     path.resolve(dirname, '../../')
     return folder;
 }
 
-
+export function getFullPath(filename) {
+    return path.isAbsolute(filename)
+        ? filename
+        : path.join(process.cwd(), filename);
+}
 
 export function openFileInSystem(filePath) {
     return new Promise(resolve => {

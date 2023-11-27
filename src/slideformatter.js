@@ -1,4 +1,6 @@
+import marpCLI from '@marp-team/marp-cli/lib/marp-cli.js';
 import fs from 'fs';
+import fsPromises from 'fs/promises';
 
 import path from 'path';
 import {logger} from "./shared/logger.js";
@@ -108,6 +110,7 @@ const replaceContentsInMarkdown = (markdownFile, resultFile) => {
 
 export async function formatAndBuild(markdownFile) {
 
+    console.log("formatting", markdownFile);
     // get parent folder from markdown file
     // get folder name
     const folder = path.dirname(markdownFile);
@@ -144,5 +147,71 @@ export async function formatAndBuild(markdownFile) {
     logger.info("copy files from " + srcfolder + " to " + outputfolder);
     await replaceContentsInMarkdown(markdownFile, resultFile);
     logger.info("replace contents in " + markdownFile + " to " + resultFile);
-    return resultFile;
+   await convertToHtml(resultFile);
+
+const  indexFile=   await createMarpitIndexFile(resultFile);
+await convertToHtml(indexFile);
+return resultFile;
+}
+
+
+export async function createMarpitIndexFile(inputFilePath) {
+    try {
+
+        // Read the input file
+        const data = await fsPromises.readFile(inputFilePath, 'utf8');
+
+        // Split the content into sections using '---'
+        const sections = data.split(/---\s*/);
+
+        // The first section should be the header
+        const header = sections[0] +  '\n'  + sections[1] +  '\n';
+
+        // The last section should be the content of the last slide
+        const lastSlideContent = sections[sections.length - 1];
+
+        // Prepare the content for index.md
+        let newIndexContent = `---\n${header}\n---\n${lastSlideContent}`;
+
+        newIndexContent=        newIndexContent.replace("paginate: \"true\"","paginate: \"false\"");
+
+        // Determine the path for index.md in the same directory
+        const directory = path.dirname(inputFilePath);
+        const indexFilePath = path.join(directory, 'index.md');
+
+        // Write the new index.md file
+        await fsPromises.writeFile(indexFilePath, newIndexContent, 'utf8');
+        console.log('index.md has been created successfully');
+        return indexFilePath;
+    } catch (err) {
+        console.error('Error:', err);
+    }
+}
+
+
+
+export async function convertToHtml(filename) {
+
+    console.log("converting to html",filename);
+    const folder = path.dirname(filename);
+    const basename = path.basename(filename);
+    const outputfolder = getCurrentProjectFolder() + "/dist"  ;
+    const outputfile = outputfolder + "/" + basename.replace(".md",".html");
+
+
+    const args = [filename, '-o', outputfile];
+console.log("args",args);
+// Invoke the cliInterface function with the arguments
+await    marpCLI.cliInterface(args)
+    console.log('Done!');
+
+// // Invoke the cliInterface function with the arguments
+//     marpCLI.cliInterface(args).then(() => {
+//         console.log('Done!');
+//     }).catch((err) => {
+//         console.error(err);
+//     });
+//
+
+
 }
