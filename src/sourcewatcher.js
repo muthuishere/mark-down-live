@@ -13,11 +13,11 @@ export function watchFile(filename){
          console.log(`event type is: ${eventType}`);
          console.log(`filename provided: ${inp}`);
 
-         if (eventType =='change' && inp !== filename){
-             console.log("Ignoring this file change event")
-             return;
-         }
-
+         // if (eventType =='change' && inp !== filename){
+         //     console.log("Ignoring this file change event")
+         //     return;
+         // }
+         //
          console.log("File changed, formatting and building")
         if (timeout) {
             clearTimeout(timeout);
