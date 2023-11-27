@@ -3,10 +3,10 @@ import marpCLI from '@marp-team/marp-cli/lib/marp-cli.js';
 import liveServer from "live-server";
 import {getCurrentProjectFolder} from "./shared/os_utils.js";
 
-export async function startServer(serverFolder) {
+export async function startServer(outputfolder) {
   //   const args = ['-w','-p', '--server', serverFolder]
   // await    marpCLI.cliInterface(args)
-    const outputfolder = getCurrentProjectFolder() + "/dist"  ;
+
     var params = {
         port: 9500, // Set the server port. Defaults to 8080.
         host: "0.0.0.0", // Set the address to bind to. Defaults to 0.0.0.0 or process.env.IP.

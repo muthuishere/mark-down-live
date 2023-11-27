@@ -12,3 +12,16 @@ The markdown file with ###Contents### will be replaced by all the topics which i
 
 npx git+https://github.com/muthuishere/slide-presenter-livestream.git
 ```
+
+
+
+npm install -g .
+
+
+now run anywhere like
+
+```shell
+present-mark-deck "/Users/muthuishere/Library/Mobile Documents/iCloud~md~obsidian/Documents/muthuishere/courses/junit5/programming.md"
+  
+
+```

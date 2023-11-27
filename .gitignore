@@ -6,3 +6,4 @@
 /.idea/vcs.xml
 /logs/app.log
 /logs/error.log
+/dist/

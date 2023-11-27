@@ -114,14 +114,14 @@ export async function formatAndBuild(markdownFile) {
     // get parent folder from markdown file
     // get folder name
     const folder = path.dirname(markdownFile);
-    console.log(folder);
+
 
     if (fs.existsSync(markdownFile) === false)
         throw new Error("Markdown file does not exist!");
 
     const srcfolder = path.dirname(markdownFile);
 
-    console.log(folder);
+    // console.log(folder);
 
     // get file name on
 
@@ -181,7 +181,7 @@ export async function createMarpitIndexFile(inputFilePath) {
 
         // Write the new index.md file
         await fsPromises.writeFile(indexFilePath, newIndexContent, 'utf8');
-        console.log('index.md has been created successfully');
+        // console.log('index.md has been created successfully');
         return indexFilePath;
     } catch (err) {
         console.error('Error:', err);
@@ -192,7 +192,7 @@ export async function createMarpitIndexFile(inputFilePath) {
 
 export async function convertToHtml(filename) {
 
-    console.log("converting to html",filename);
+    // console.log("converting to html",filename);
     const folder = path.dirname(filename);
     const basename = path.basename(filename);
     const outputfolder = getCurrentProjectFolder() + "/dist"  ;
@@ -200,7 +200,7 @@ export async function convertToHtml(filename) {
 
 
     const args = [filename, '-o', outputfile];
-console.log("args",args);
+// console.log("args",args);
 // Invoke the cliInterface function with the arguments
 await    marpCLI.cliInterface(args)
     console.log('Done!');

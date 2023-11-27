@@ -5,6 +5,7 @@
 import {fileExists, getCurrentProjectFolder, getFullPath} from "../src/shared/os_utils.js";
 import {stopSourceWatcher, watchFile} from "../src/sourcewatcher.js";
 import {startServer} from "../src/sliderunner.js";
+import {openApp} from "../src/browser/entrypoint.js";
 async function main(filename) {
 
     if(fileExists(filename)){
@@ -18,7 +19,13 @@ async function main(filename) {
         watchFile(fullPath);
         // start live Server
         const folder = getCurrentProjectFolder() + "/dist";
+        //
+        // setTimeout(async ()=>{
+        //      openApp("http://localhost:9500")
+        // }, 1000); // Wait for 2 seconds after the last change
+
         await startServer(folder)
+
 
 
 
