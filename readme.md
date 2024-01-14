@@ -49,6 +49,18 @@ markdown-live presentation.md
 
 Open your browser and go to `http://localhost:9500` to see your live presentation.
 
+## Credits and Acknowledgements
+
+Special thanks to the following projects for their invaluable contributions to MarkDownLive:
+
+- [Marp CLI](https://www.npmjs.com/package/@marp-team/marp-cli): For enabling seamless markdown to presentation conversions.
+- [Typewriter Effect](https://www.npmjs.com/package/typewriter-effect): For adding dynamic typewriter effects to live presentations.
+
+## Third-Party Licenses
+
+For information on third-party licenses used in MarkDownLive, please refer to the [Third Party Licenses](THIRD-PARTY-LICENSES.txt) page.
+
+
 ## Contributing
 
 Contributions, issues, and feature requests are welcome! Feel free to check [issues page](https://github.com/muthuishere/markdown-live/issues).
@@ -56,4 +68,3 @@ Contributions, issues, and feature requests are welcome! Feel free to check [iss
 ## License
 
 [MIT](LICENSE)
-[Third Party Licenses](THIRD-PARTY-LICENSES.txt)

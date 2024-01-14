@@ -43,10 +43,21 @@
     }
   },
   "keywords": [
-    "mark-deck-script",
-    "slide-stream",
-    "slide",
-    "stream"
+    "markdown",
+    "presentation",
+    "live-stream",
+    "slideshow",
+    "markdown-to-html",
+    "real-time",
+    "education",
+    "webinar",
+    "typewriter-effect",
+    "Marp",
+    "live-presentation",
+    "streaming",
+    "markdown-editor",
+    "markdown-viewer",
+    "interactive-slides"
   ],
   "author": "Muthukumaran Navaneethakrishnan(https://github.com/muthuishere/)",
   "license": "MIT",
