@@ -1,6 +1,5 @@
 import {convertToHtml, copyAssetsFrom, getOutputFolder, replaceContentsInMarkdown} from "../shared/slidebuild.js";
 import path from "path";
-import chalk from "chalk";
 
 export default async function generate( markdownFile) {
 

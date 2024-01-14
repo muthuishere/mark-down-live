@@ -1,7 +1,5 @@
-import fsPromises from "fs/promises";
-import path from "path";
 import {getCurrentProjectFolder} from "../shared/os_utils.js";
-import {copyAssetsFrom, generateHtmlWithScript} from "../shared/slidebuild.js";
+import {generateHtmlWithScript} from "../shared/slidebuild.js";
 
 export default async function generate(indexFilePath, generatedFileName = "index.html") {
     try {

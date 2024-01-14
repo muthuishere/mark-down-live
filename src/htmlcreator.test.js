@@ -1,4 +1,3 @@
-import {expect} from "chai";
 import {startServer} from "./server.js";
 import {getCurrentProjectFolder} from "./shared/os_utils.js";
 

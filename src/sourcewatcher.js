@@ -1,6 +1,5 @@
 import fs from 'fs';
 import {formatAndBuild} from "./htmlcreator.js";
-import {getFullPath} from "./shared/os_utils.js";
 import path from "path";
 
 let timeout;

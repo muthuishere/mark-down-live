@@ -2,14 +2,13 @@
 
 'use strict'
 
-import {fileExists, getCurrentProjectFolder, getFolderPathForFile, getFullPath} from "../src/shared/os_utils.js";
+import {fileExists, getFullPath} from "../src/shared/os_utils.js";
 import {stopSourceWatcher, watchFile} from "../src/sourcewatcher.js";
 import {startServer} from "../src/server.js";
-import {openApp} from "../src/browser/entrypoint.js";
 import path from "path";
 import fs from "fs";
-import {getFullPresentationUrl, getIndexUrl} from "../src/shared/config.js";
-import {getOutputFolder, setProjectRunningFolder} from "../src/shared/slidebuild.js";
+import {getOutputFolder} from "../src/shared/slidebuild.js";
+
 async function main(filename) {
 
     if(fileExists(filename)){

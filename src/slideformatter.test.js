@@ -1,7 +1,8 @@
 import {createHandiconAnimatedIndexFile, formatAndBuild} from "./htmlcreator.js";
 import fs from 'fs';
-import { expect } from 'chai';
+import {expect} from 'chai';
 import {getCurrentProjectFolder} from "./shared/os_utils.js";
+
 describe('slideformatter', () => {
     it('should format a slide', async () => {
         //testdata/mockdocs/full-testcontainer.md

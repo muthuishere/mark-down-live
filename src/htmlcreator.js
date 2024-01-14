@@ -6,7 +6,6 @@ import {logger} from "./shared/logger.js";
 import {getFullPresentationUrl, getIndexUrl} from "./shared/config.js";
 import chalk from "chalk";
 import {getOutputFolder} from "./shared/slidebuild.js";
-import  generateAnimatedHandIndex from './generator/AnimatedHandIndexGenerator.js';
 import generateFullPresentation from './generator/FullPresentationGenerator.js';
 import generateMainIndex from './generator/MainIndexGenerator.js';
 import generateTypeWritingIndex from './generator/TypewriteIndexGenerator.js';

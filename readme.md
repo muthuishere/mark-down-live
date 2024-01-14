@@ -4,7 +4,8 @@
 
 ```shell
 
-npx git+https://github.com/muthuishere/slide-presenter-livestream.git
+#npx git+https://github.com/muthuishere/slide-presenter-livestream.git
+npx https://github.com/muthuishere/slide-presenter-livestream.git
 ```
 
 

@@ -1,7 +1,5 @@
-
-
 import liveServer from "live-server";
-import  * as config from "./shared/config.js";
+import * as config from "./shared/config.js";
 
 export async function startServer(outputfolder) {
     console.log("Serving " + outputfolder + " at http://")

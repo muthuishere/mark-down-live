@@ -1,12 +1,6 @@
-
-
 import {getCurrentProjectFolder} from "../shared/os_utils.js";
-import {
-    copyAssetsFrom,
-
-    getOutputFolder
-} from "../shared/slidebuild.js";
-import chalk, {Chalk} from "chalk";
+import {copyAssetsFrom, getOutputFolder} from "../shared/slidebuild.js";
+import chalk from "chalk";
 import {promises as fsPromises} from "fs";
 import marpCLI from '@marp-team/marp-cli/lib/marp-cli.js';
 

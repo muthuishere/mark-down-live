@@ -1,11 +1,10 @@
-import fs from "fs";
+import fs, {promises as fsPromises} from "fs";
 import path from "path";
 import marpCLI from '@marp-team/marp-cli/lib/marp-cli.js';
-import {getCurrentProjectFolder, getHomeFolder} from "./os_utils.js";
-import {promises as fsPromises} from "fs";
+import {getCurrentProjectFolder} from "./os_utils.js";
 import chalk from "chalk";
 
- let projectRunningFolder = null;
+let projectRunningFolder = null;
 
 export function setProjectRunningFolder(folder){
 
