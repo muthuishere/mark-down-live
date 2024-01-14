@@ -1,4 +1,4 @@
-import {createMarpitIndexFile, formatAndBuild} from "./slideformatter.js";
+import {createHandiconAnimatedIndexFile, formatAndBuild} from "./htmlcreator.js";
 import fs from 'fs';
 import { expect } from 'chai';
 import {getCurrentProjectFolder} from "./shared/os_utils.js";
@@ -20,7 +20,7 @@ describe('slideformatter', () => {
         //testdata/mockdocs/full-testcontainer.md
         const markdownFile = getCurrentProjectFolder() +'/dist/programming.md';
 
-        await createMarpitIndexFile(markdownFile);
+        await createHandiconAnimatedIndexFile(markdownFile);
 
        // expect file to be available in dist folder
         const result = fs.readFileSync('./dist/index.md', 'utf8');

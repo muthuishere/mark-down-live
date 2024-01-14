@@ -2,13 +2,14 @@
 
 'use strict'
 
-import {fileExists, getCurrentProjectFolder, getFullPath} from "../src/shared/os_utils.js";
+import {fileExists, getCurrentProjectFolder, getFolderPathForFile, getFullPath} from "../src/shared/os_utils.js";
 import {stopSourceWatcher, watchFile} from "../src/sourcewatcher.js";
-import {startServer} from "../src/sliderunner.js";
+import {startServer} from "../src/server.js";
 import {openApp} from "../src/browser/entrypoint.js";
 import path from "path";
 import fs from "fs";
 import {getFullPresentationUrl, getIndexUrl} from "../src/shared/config.js";
+import {getOutputFolder, setProjectRunningFolder} from "../src/shared/slidebuild.js";
 async function main(filename) {
 
     if(fileExists(filename)){
@@ -16,12 +17,16 @@ async function main(filename) {
         process.on('SIGINT', cleanup);  // Ctrl+C in terminal
         process.on('SIGTERM', cleanup); // Termination request from the OS
         process.on('exit', cleanup);    // Normal exit
+        //
+        // const currentFolder = getFolderPathForFile(filename);
+        // console.log("Current Folder " + currentFolder)
+        // setProjectRunningFolder(currentFolder)
 
 
-        const fullPath = getFullPath(filename);
-        watchFile(fullPath);
+        const fullPathOfFileName = getFullPath(filename);
+         watchFile(fullPathOfFileName);
 
-        const folder = getCurrentProjectFolder() + "/dist";
+        const folder = getOutputFolder();
 
 
         await startServer(folder)
@@ -58,7 +63,7 @@ function  getMarkdownFileFromCurrentDirectory(){
             if (markdownFiles.length === 0) {
                 reject('No Markdown files found');
             } else if (markdownFiles.length > 1) {
-                reject('More than one Markdown file found');
+                reject('More than one Markdown file found , choose a filename to be parameter');
             } else {
                 resolve(path.join(directory, markdownFiles[0])); // Get the full path of the first file
             }

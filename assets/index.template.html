@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <title><!-- @title --></title>
+<!-- @css -->
+</head>
+<body>
+<!-- @marp -->
+
+<script>
+    function hideAndRevealLastElement() {
+        const section = document.getElementById('1');
+
+        // Find the last element directly above the footer
+        const footer = section.querySelector('footer');
+        let lastElement = footer.previousElementSibling;
+        const storedElementDetails = localStorage.getItem('lastElementDetails');
+        const currentElementDetails = lastElement.innerHTML;
+
+        // Compare and exit the function if they match
+        if (storedElementDetails === currentElementDetails) {
+            return;
+        }
+
+        // Hide the content of the last element initially
+        lastElement.style.visibility = 'hidden';
+
+
+        // Create the mask div and set its initial styles
+        const mask = document.createElement('div');
+        mask.style.position = 'absolute';
+        mask.style.top = lastElement.offsetTop + 'px';
+        mask.style.left = '80px';
+        mask.style.width = '100%';
+        mask.style.height = lastElement.offsetHeight + 'px';
+        mask.style.backgroundColor = 'white';
+        mask.style.transition = 'left 2s';
+
+        const fingerIcon = document.createElement('img');
+        fingerIcon.src = 'handholding.gif'; // Replace with the path to your GIF
+        fingerIcon.style.position = 'absolute';
+        fingerIcon.style.top = (lastElement.offsetTop -100)  + 'px'; // Align top of icon with top of the element
+        fingerIcon.style.left = '-100px'; // Start position of the icon
+        fingerIcon.style.transition = 'left 2s';
+        fingerIcon.style.zIndex='1500'
+        fingerIcon.style.transform = 'rotate(90deg) scale(0.25)'; // Rotate by 90 degrees and scale down to 25%
+
+//202px
+        // Append the mask and the icon to the section
+        section.appendChild(mask);
+        document.body.appendChild(fingerIcon);
+
+        // Delay to ensure the initial state is rendered
+        setTimeout(() => {
+            // Reveal the content and start sliding the mask and the icon
+            lastElement.style.visibility = 'visible';
+            mask.style.left = '100%'; // Slide the mask to the right
+            fingerIcon.style.left = '100%'; // Move the icon in sync with the mask
+        }, 100);
+
+        // Optional: remove the mask and icon after the animation is complete
+        setTimeout(() => {
+            mask.remove();
+            fingerIcon.remove();
+            localStorage.setItem('lastElementDetails', currentElementDetails);
+
+        }, 2100); // 2 seconds for animation + 100ms buffer
+    }
+
+    document.addEventListener('DOMContentLoaded', hideAndRevealLastElement);
+    //s
+</script>
+</body>
+</html>

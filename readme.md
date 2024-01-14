@@ -24,7 +24,7 @@ now run anywhere like
 present-mark-deck "/Users/muthuishere/Library/Mobile Documents/iCloud~md~obsidian/Documents/muthuishere/courses/junit5/programming.md"
  
  
-## or   in a folder which has a markdown
+## or   in a folder which has a single markdown
 present-mark-deck
 
 ```

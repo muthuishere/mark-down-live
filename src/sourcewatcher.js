@@ -1,46 +1,87 @@
 import fs from 'fs';
-import {formatAndBuild} from "./slideformatter.js";
+import {formatAndBuild} from "./htmlcreator.js";
 import {getFullPath} from "./shared/os_utils.js";
 import path from "path";
 
 let timeout;
 let watcher
+let isBuilding = false;
+let changeQueue = [];
+let debounceTimer = null;
+
+function startWatching(filenameWithFullPath) {
+
+    console.log(`Watching for file changes... ${filenameWithFullPath}`);
+   const folder = path.dirname(filenameWithFullPath);
+    const filename = path.basename(filenameWithFullPath);
+
+    watcher = fs.watch(filenameWithFullPath, (eventType, currentFile) => {
+        const inp = path.basename(currentFile);
+        console.log(`inp: ${inp} filename: ${filenameWithFullPath}  currentFile: ${currentFile}`);
 
 
-export function watchFile(filename) {
+        const isSameFile = filename === inp;
 
-    formatAndBuild(filename)
-    const basename = path.basename(filename)
-
-
-    watcher = fs.watch(filename, (eventType, currentFile) => {
-
-        const inp = path.basename(currentFile)
-        const isSameFile = basename === inp;
-
-        // get only file name from path
-
-        // const basename = path.basename(filename)
-
-        if (isSameFile == false) {
-
-            console.log(`Ignoring Event type is: ${eventType} Filename provided: ${basename} Same file: ${isSameFile}`);
-
+        if (!isSameFile) {
+            console.log(`Ignoring Event type is: ${eventType} Filename provided: ${filename} Same file: ${isSameFile}  ${filenameWithFullPath} ${inp}`);
             return;
         }
 
-        console.log(`File changed Event type is: ${eventType} Filename provided: ${basename} Same file: ${isSameFile}`);
-        if (timeout) {
-            clearTimeout(timeout);
+        console.log(`File changed Event type is: ${eventType} Filename provided: ${filename} Same file: ${isSameFile}`);
+
+        if (debounceTimer) {
+            clearTimeout(debounceTimer);
         }
 
-        timeout = setTimeout(() => {
-
-            formatAndBuild(filename)
-        }, 1000); // Wait for 2 seconds after the last change
+        debounceTimer = setTimeout(() => {
+            enqueueChange(filenameWithFullPath);
+            processNextChange();
+        }, 2000); // Debounce period
     });
 
- //   console.log('Watching for file changes...');
+    watcher.on('error', (err) => {
+        console.log('Error: ' + err);
+    });
+}
+
+function enqueueChange(filename) {
+    if (!isBuilding) {
+        changeQueue.push(filename);
+    }
+}
+
+async function processNextChange() {
+    if (isBuilding || changeQueue.length === 0) {
+        return;
+    }
+
+    const filename = changeQueue.shift();
+    isBuilding = true;
+
+    try {
+        await formatAndBuild(filename);
+    } catch (err) {
+        console.error('Error during formatAndBuild:', err);
+    } finally {
+        isBuilding = false;
+        if (changeQueue.length > 0) {
+            // Process the next change in the queue
+            processNextChange();
+        }
+    }
+}
+
+export  function watchFile(filename) {
+
+     formatAndBuild(filename).then(() => {
+
+         startWatching(filename)
+
+     }).catch((err) => {
+            console.log(err)
+     });
+
+    //   console.log('Watching for file changes...');
 
 }
 
@@ -49,4 +90,12 @@ export function stopSourceWatcher() {
         watcher.close();
         console.log('Stopped watching the file.');
     }
+
+    if (debounceTimer) {
+        clearTimeout(debounceTimer);
+    }
+    if(changeQueue.length > 0){
+        changeQueue = [];
+    }
+
 }
