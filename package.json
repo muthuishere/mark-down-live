@@ -1,13 +1,13 @@
 {
   "name": "slide-presenter-live-stream",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Present your slides in a live stream",
   "main": "bin/index.js",
   "type": "module",
   "scripts": {
     "coverage": "nyc npm run test",
     "test": "mocha --experimental-loader=@istanbuljs/esm-loader-hook 'src/**/*.test.js' --recursive --timeout 60000 ",
-    "run-template": "node bin/index.js ./testdata/mockdocs/programming.md",
+    "run-template": "node bin/index.js testdata/mockdocs/programming.md",
     "generate-license": "generate-license-file --input package.json --output ./THIRD-PARTY-LICENSES.txt --overwrite",
     "publish-package": "npm publish"
   },
