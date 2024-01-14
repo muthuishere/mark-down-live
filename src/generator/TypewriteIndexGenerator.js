@@ -1,5 +1,5 @@
 import {getCurrentProjectFolder} from "../shared/os_utils.js";
-import {copyAssetsFrom, getOutputFolder} from "../shared/slidebuild.js";
+import {copyAssetsToOutputFolder, getOutputFolder} from "../shared/slidebuild.js";
 import chalk from "chalk";
 import {promises as fsPromises} from "fs";
 import marpCLI from '@marp-team/marp-cli/lib/marp-cli.js';
@@ -9,7 +9,7 @@ export default async function generate(indexFilePath, generatedFileName = "type.
 
 
         const assetsFolder = getCurrentProjectFolder() + "/assets"
-        await copyAssetsFrom(assetsFolder);
+        await copyAssetsToOutputFolder(assetsFolder);
         //
         const injectScriptFile = assetsFolder+ "/type.template.js"
         const hideScriptFile = assetsFolder+ "/hide.template.js"

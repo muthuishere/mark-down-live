@@ -1,7 +1,7 @@
 {
-  "name": "slide-presenter-live-stream",
+  "name": "mark-down-live",
   "version": "0.3.0",
-  "description": "Present your slides in a live stream",
+  "description": "Effortlessly stream and present your Markdown slides live in-browser with MarkDownLive. Ideal for educators, presenters, and anyone needing to create dynamic, real-time presentations. Simply write in Markdown, and let MarkDownLive handle the live streaming magic!",
   "main": "bin/index.js",
   "type": "module",
   "scripts": {
@@ -50,13 +50,13 @@
   ],
   "author": "Muthukumaran Navaneethakrishnan(https://github.com/muthuishere/)",
   "license": "MIT",
-  "homepage": "https://github.com/muthuishere/slide-presenter-livestream",
+  "homepage": "https://github.com/muthuishere/mark-down-live",
   "repository": {
     "type": "git",
-    "url": "git@github.com:muthuishere/slide-presenter-livestream.git"
+    "url": "git@github.com:muthuishere/mark-down-live.git"
   },
   "bugs": {
-    "url": "git@github.com:muthuishere/slide-presenter-livestream.git/issues"
+    "url": "git@github.com:muthuishere/mark-down-live.git/issues"
   },
   "engines": {
     "node": ">=14.0.0"

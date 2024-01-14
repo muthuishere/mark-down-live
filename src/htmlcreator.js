@@ -62,7 +62,7 @@ async function saveIndexFile( markdownFile) {
 
 export async function formatAndBuild(markdownFile) {
 
-    console.log("formatting", markdownFile);
+    // console.log("formatting", markdownFile);
     // get parent folder from markdown file
     // get folder name
     const folder = path.dirname(markdownFile);

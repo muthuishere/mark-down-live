@@ -46,10 +46,10 @@ export function getOutputFolder() {
 
 }
 
-export async function copyAssetsFrom(srcfolder) {
+export async function copyAssetsToOutputFolder(srcfolder) {
     const outputfolder = getOutputFolder()
 
-    await copyFilesByExtension(srcfolder, outputfolder, ['png','gif', 'svg', 'jpg']);
+    await copyFilesByExtension(srcfolder, outputfolder, ['png','gif', 'svg', 'jpg','css','scss']);
 
 }
 
