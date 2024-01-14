@@ -1,5 +1,5 @@
 {
-  "name": "markdown-live",
+  "name": "present-markdown-now",
   "version": "0.3.0",
   "description": "Effortlessly stream and present your Markdown slides live in-browser with MarkDownLive. Ideal for educators, presenters, and anyone needing to create dynamic, real-time presentations. Simply write in Markdown, and let MarkDownLive handle the live streaming magic!",
   "main": "bin/index.js",
@@ -61,13 +61,13 @@
   ],
   "author": "Muthukumaran Navaneethakrishnan(https://github.com/muthuishere/)",
   "license": "MIT",
-  "homepage": "https://github.com/muthuishere/markdown-live",
+  "homepage": "https://github.com/muthuishere/present-markdown-now",
   "repository": {
     "type": "git",
-    "url": "git@github.com:muthuishere/markdown-live.git"
+    "url": "git@github.com:muthuishere/present-markdown-now.git"
   },
   "bugs": {
-    "url": "git@github.com:muthuishere/markdown-live.git/issues"
+    "url": "git@github.com:muthuishere/present-markdown-now.git/issues"
   },
   "engines": {
     "node": ">=14.0.0"

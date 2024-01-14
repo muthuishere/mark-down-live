@@ -15,14 +15,14 @@ Effortlessly stream and present your Markdown slides live in-browser with MarkDo
 Install MarkDownLive using npm:
 
 ```bash
-npm install markdown-live
+npm install present-markdown-now
 ```
 
 Or run it directly with npx:
 
 ```bash
-npx https://github.com/muthuishere/slide-presenter-livestream.git
-npx markdown-live
+npx https://github.com/muthuishere/present-markdown-now.git
+npx present-markdown-now
 ```
 
 ## Usage
@@ -30,13 +30,13 @@ npx markdown-live
 Navigate to a folder containing your markdown file and run:
 
 ```bash
-markdown-live
+present-markdown-now
 ```
 
 If the folder contains one markdown file, it will automatically be served. To specify a file:
 
 ```bash
-markdown-live path/to/your/file.md
+present-markdown-now path/to/your/file.md
 ```
 
 ## Example
@@ -44,7 +44,7 @@ markdown-live path/to/your/file.md
 Create a Markdown file (e.g., `presentation.md`) and run:
 
 ```bash
-markdown-live presentation.md
+present-markdown-now presentation.md
 ```
 
 Open your browser and go to `http://localhost:9500` to see your live presentation.
@@ -63,7 +63,7 @@ For information on third-party licenses used in MarkDownLive, please refer to th
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome! Feel free to check [issues page](https://github.com/muthuishere/markdown-live/issues).
+Contributions, issues, and feature requests are welcome! Feel free to check [issues page](https://github.com/muthuishere/present-markdown-now/issues).
 
 ## License
 
