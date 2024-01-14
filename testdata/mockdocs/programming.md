@@ -178,3 +178,4 @@ Speculating on future trends in programming, including AI and machine learning.
 # Why should i work 
 
 Speculating on future trends in programming, including AI and machine learning.
+hhh hjshdj dsdjhdjsh hhhhj

@@ -8,6 +8,7 @@ import {startServer} from "../src/sliderunner.js";
 import {openApp} from "../src/browser/entrypoint.js";
 import path from "path";
 import fs from "fs";
+import {getFullPresentationUrl, getIndexUrl} from "../src/shared/config.js";
 async function main(filename) {
 
     if(fileExists(filename)){
@@ -19,12 +20,9 @@ async function main(filename) {
 
         const fullPath = getFullPath(filename);
         watchFile(fullPath);
-        // start live Server
+
         const folder = getCurrentProjectFolder() + "/dist";
-        //
-        // setTimeout(async ()=>{
-        //      openApp("http://localhost:9500")
-        // }, 1000); // Wait for 2 seconds after the last change
+
 
         await startServer(folder)
 

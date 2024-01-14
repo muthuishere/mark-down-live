@@ -7,8 +7,10 @@
   "scripts": {
     "coverage": "nyc npm run test",
     "test": "mocha --experimental-loader=@istanbuljs/esm-loader-hook 'src/**/*.test.js' --recursive --timeout 60000 ",
+    "run-template": "node bin/index.js ./testdata/mockdocs/programming.md",
     "publish-package": "npm publish"
   },
+
   "bin": {
     "present-mark-deck": "bin/index.js"
   },

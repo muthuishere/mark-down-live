@@ -22,6 +22,9 @@ now run anywhere like
 
 ```shell
 present-mark-deck "/Users/muthuishere/Library/Mobile Documents/iCloud~md~obsidian/Documents/muthuishere/courses/junit5/programming.md"
-  
+ 
+ 
+## or   in a folder which has a markdown
+present-mark-deck
 
 ```

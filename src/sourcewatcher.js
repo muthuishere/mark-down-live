@@ -10,16 +10,17 @@ let watcher
 export function watchFile(filename) {
 
     formatAndBuild(filename)
+    const basename = path.basename(filename)
 
 
     watcher = fs.watch(filename, (eventType, currentFile) => {
 
-        const inp = getFullPath(currentFile)
-        const isSameFile = filename === inp;
+        const inp = path.basename(currentFile)
+        const isSameFile = basename === inp;
 
         // get only file name from path
 
-        const basename = path.basename(filename)
+        // const basename = path.basename(filename)
 
         if (isSameFile == false) {
 
@@ -39,7 +40,7 @@ export function watchFile(filename) {
         }, 1000); // Wait for 2 seconds after the last change
     });
 
-    console.log('Watching for file changes...');
+ //   console.log('Watching for file changes...');
 
 }
 
