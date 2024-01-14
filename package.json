@@ -50,13 +50,13 @@
   ],
   "author": "Muthukumaran Navaneethakrishnan(https://github.com/muthuishere/)",
   "license": "MIT",
-  "homepage": "https://github.com/muthuishere/mark-deck-script",
+  "homepage": "https://github.com/muthuishere/slide-presenter-livestream",
   "repository": {
     "type": "git",
-    "url": "git@github.com:muthuishere/mark-deck-script.git"
+    "url": "git@github.com:muthuishere/slide-presenter-livestream.git"
   },
   "bugs": {
-    "url": "https://github.com/muthuishere/mark-deck-script/issues"
+    "url": "git@github.com:muthuishere/slide-presenter-livestream.git/issues"
   },
   "engines": {
     "node": ">=14.0.0"
