@@ -1,6 +1,6 @@
-# MarkDownLive
+# PresentMarkdownNow
 
-Effortlessly stream and present your Markdown slides live in-browser with MarkDownLive. Ideal for educators, presenters, and anyone needing to create dynamic, real-time presentations. Simply write in Markdown, and let MarkDownLive handle the live streaming magic!
+Effortlessly stream and present your Markdown slides live in-browser with PresentMarkdownNow. Ideal for educators, presenters, and anyone needing to create dynamic, real-time presentations. Simply write in Markdown, and let PresentMarkdownNow handle the live presentations!
 
 ## Features
 
@@ -12,7 +12,7 @@ Effortlessly stream and present your Markdown slides live in-browser with MarkDo
 
 ## Installation
 
-Install MarkDownLive using npm:
+Install PresentMarkdownNow using npm:
 
 ```bash
 npm install present-markdown-now
@@ -51,14 +51,14 @@ Open your browser and go to `http://localhost:9500` to see your live presentatio
 
 ## Credits and Acknowledgements
 
-Special thanks to the following projects for their invaluable contributions to MarkDownLive:
+Special thanks to the following projects for their invaluable contributions to PresentMarkdownNow:
 
 - [Marp CLI](https://www.npmjs.com/package/@marp-team/marp-cli): For enabling seamless markdown to presentation conversions.
 - [Typewriter Effect](https://www.npmjs.com/package/typewriter-effect): For adding dynamic typewriter effects to live presentations.
 
 ## Third-Party Licenses
 
-For information on third-party licenses used in MarkDownLive, please refer to the [Third Party Licenses](THIRD-PARTY-LICENSES.txt) page.
+For information on third-party licenses used in PresentMarkdownNow, please refer to the [Third Party Licenses](THIRD-PARTY-LICENSES.txt) page.
 
 
 ## Contributing
