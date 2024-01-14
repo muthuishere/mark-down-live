@@ -10,6 +10,10 @@ Effortlessly stream and present your Markdown slides live in-browser with Presen
 - **Easy Access**: View the latest slide at `http://localhost:9500`.
 - **Full Presentation Download**: Download your entire presentation anytime.
 
+## Demo
+[![PresentMarkdownNow Demo](assets%2Fpresentnow.png)](https://youtu.be/Uaxzf9ZFd_k)
+
+
 ## Installation
 
 Install PresentMarkdownNow using npm:
