@@ -8,7 +8,7 @@ export async function startServer(outputfolder) {
         port: config.PORT, // Set the server port. Defaults to 8080.
         host: "0.0.0.0", // Set the address to bind to. Defaults to 0.0.0.0 or process.env.IP.
         root: outputfolder, // Set root directory that's being served. Defaults to cwd.
-        open: false, // When false, it won't load your browser by default.
+        open: true, // When false, it won't load your browser by default.
         // ignore: 'assets, !**/index.html', // Ignore all files except index.html
         // ignorePattern: /^(?!.*index\.html$).*/,
         watch: [outputfolder + '/index.html'],
