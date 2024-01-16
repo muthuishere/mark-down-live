@@ -14,7 +14,7 @@ async function updateIndexPage(htmlText){
         //
         // // Get the text content
         // const htmlText = await response.text();
-        console.log("htmlText",htmlText)
+        //console.log("htmlText",htmlText)
 
         // Parse the HTML
         const parser = new DOMParser();
@@ -94,11 +94,10 @@ function handleSingleElement(lastElement, totalNodesInSection) {
         const last = storedElementDetails;
         contentsToBeTyped = currentElementDetails.replace(storedElementDetails, "");
         lastElement.innerHTML = last;
-        // elementToAnimate = document.createElement("span");
-        // elementToAnimate.innerHTML = "";
-        // lastElement.appendChild(elementToAnimate);
-        //split the currentElementDetails
-        elementToAnimate = lastElement
+        elementToAnimate = document.createElement("span");
+        elementToAnimate.innerHTML = "";
+        lastElement.appendChild(elementToAnimate);
+
     } else {
 
         contentsToBeTyped = lastElement.innerHTML

@@ -27,11 +27,13 @@ async function generateHtmlContent(tempHtmlFile) {
     let injectScriptContent = await fsPromises.readFile(assetsFolder + "/type.template.js", 'utf8');
     let moduleScriptContent = await fsPromises.readFile(assetsFolder + "/type.module.template.js", 'utf8');
     let hideScriptContent = await fsPromises.readFile(assetsFolder + "/hide.template.js", 'utf8');
+    let typeScriptContent = await fsPromises.readFile("/Users/muthuishere/Downloads/typewriterjs-main/dist/core.js", 'utf8');
 
     // Script to be inserted
     let scriptTag = '<script>' + hideScriptContent + '</script>';
     scriptTag = scriptTag + '<script type="module">' + moduleScriptContent + '</script>';
-    scriptTag = scriptTag + '<script src="' + "https://unpkg.com/typewriter-effect@latest/dist/core.js" + '"></script>';
+    scriptTag = scriptTag + '<script type="module">' + typeScriptContent + '</script>';
+    // scriptTag = scriptTag + '<script src="' + "https://unpkg.com/typewriter-effect@latest/dist/core.js" + '"></script>';
 
 
     scriptTag = scriptTag + '<script>' + injectScriptContent + '</script>';

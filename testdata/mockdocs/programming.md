@@ -189,8 +189,10 @@ Welcome to thiing, so what will happen, very soon something could. why should yo
 
 
 ---
-# 24 - Programming Communities
- - what do i want to update newly apart from what i have magizhini
- - Is it working
- - yes it is working
+# What is Golang
+- A high perfomnt Language
+- A high perfomnt Language
+
+- A high perfomnt Language testubn check ing test
+
 
