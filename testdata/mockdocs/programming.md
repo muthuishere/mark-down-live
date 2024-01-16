@@ -190,9 +190,4 @@ Welcome to thiing, so what will happen, very soon something could. why should yo
 
 ---
 # What is Golang
-- A high perfomnt Language
-- A high perfomnt Language
-
-- A high perfomnt Language testubn check ing test
-
-
+- A language is called high performance programming language

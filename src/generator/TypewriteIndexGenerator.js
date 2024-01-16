@@ -1,8 +1,10 @@
 import {getCurrentProjectFolder} from "../shared/os_utils.js";
-import {copyAssetsToOutputFolder, getOutputFolder} from "../shared/slidebuild.js";
+import {buildWithMarpCli, copyAssetsToOutputFolder, getOutputFolder} from "../shared/slidebuild.js";
 import chalk from "chalk";
 import {promises as fsPromises} from "fs";
-import marpCLI from '@marp-team/marp-cli/lib/marp-cli.js';
+
+
+import {logger} from "../shared/logger.js";
 
 export default async function generate(indexFilePath, generatedFileName = "type.html") {
     try {
@@ -27,13 +29,11 @@ async function generateHtmlContent(tempHtmlFile) {
     let injectScriptContent = await fsPromises.readFile(assetsFolder + "/type.template.js", 'utf8');
     let moduleScriptContent = await fsPromises.readFile(assetsFolder + "/type.module.template.js", 'utf8');
     let hideScriptContent = await fsPromises.readFile(assetsFolder + "/hide.template.js", 'utf8');
-    let typeScriptContent = await fsPromises.readFile("/Users/muthuishere/Downloads/typewriterjs-main/dist/core.js", 'utf8');
 
     // Script to be inserted
     let scriptTag = '<script>' + hideScriptContent + '</script>';
     scriptTag = scriptTag + '<script type="module">' + moduleScriptContent + '</script>';
-    scriptTag = scriptTag + '<script type="module">' + typeScriptContent + '</script>';
-    // scriptTag = scriptTag + '<script src="' + "https://unpkg.com/typewriter-effect@latest/dist/core.js" + '"></script>';
+    scriptTag = scriptTag + '<script src="' + "https://unpkg.com/typewriter-effect@latest/dist/core.js" + '"></script>';
 
 
     scriptTag = scriptTag + '<script>' + injectScriptContent + '</script>';
@@ -46,14 +46,15 @@ export async function generateHtmlWithMultipleScripts(filename, generatedFileNam
     const assetsFolder = getCurrentProjectFolder() + "/assets"
 
 
-    console.log("Converting to HTML", filename);
+    logger.debug("Converting to HTML" +filename);
     const outputfolder = getOutputFolder()
     const tempHtmlFile = outputfolder + "temp.html";
     const finalHtmlFile = outputfolder + generatedFileName;
 
     // Use Marp CLI to convert to temp.html
     const args = [filename, '-o', tempHtmlFile];
-    await marpCLI.cliInterface(args);
+    // await marpCLI.cliInterface(args);
+    await buildWithMarpCli(args)
 
     // Read the temp HTML file
     let htmlContent = await generateHtmlContent(tempHtmlFile);

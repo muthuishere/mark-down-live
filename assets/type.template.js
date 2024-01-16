@@ -57,7 +57,7 @@ function getTotalNodesInSection(){
 
 function handleSingleElement(lastElement, totalNodesInSection) {
     let originalLastElement = lastElement;
-    console.log("lastElement hidden ", lastElement)
+    // console.log("lastElement hidden ", lastElement)
     originalLastElement.style.visibility = 'hidden';
 
 

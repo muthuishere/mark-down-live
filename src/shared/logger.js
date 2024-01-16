@@ -8,9 +8,12 @@ import {fileExists, getCurrentProjectFolder} from "./os_utils.js";
 export const logger = winston.createLogger({
     level: 'info',
     format: winston.format.json(),
-    defaultMeta: {service: 'slidepresenter'},
+    defaultMeta: {},
     transports: [
 
+        new winston.transports.Console({
+            format: winston.format.simple()
+        }),
         new winston.transports.File({filename: getLogFolder() + '/error.log', level: 'error'}),
         new winston.transports.File({filename: getLogFolder() + '/app.log'}),
     ],
@@ -58,4 +61,6 @@ export async function initLogFolder() {
     return s;
 }
 
-initLogFolder().then(r => console.log("Log folder created at " + r)).catch(e => console.error(e))
+initLogFolder().then(r => {
+    //console.log("Log folder created at " + r)
+}).catch(e => console.error(e))

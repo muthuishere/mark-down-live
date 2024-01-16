@@ -5,6 +5,8 @@ import path from "path";
 
 import {openFileInSystem} from "./shared/os_utils.js";
 import {getIndexUrl} from "./shared/config.js";
+import {logger} from "./shared/logger.js";
+import chalk from "chalk";
 
 let timeout;
 let watcher
@@ -15,23 +17,23 @@ let debounceTimer = null;
 function startWatching(filenameWithFullPath) {
 
 
-    console.log(`Watching for file changes... ${filenameWithFullPath}`);
+    logger.info(`Watching for file changes... ${filenameWithFullPath}`);
     const folder = path.dirname(filenameWithFullPath);
     const filename = path.basename(filenameWithFullPath);
 
     watcher = fs.watch(filenameWithFullPath, (eventType, currentFile) => {
         const inp = path.basename(currentFile);
-        console.log(`inp: ${inp} filename: ${filenameWithFullPath}  currentFile: ${currentFile}`);
+        logger.debug(`inp: ${inp} filename: ${filenameWithFullPath}  currentFile: ${currentFile}`);
 
 
         const isSameFile = filename === inp;
 
         if (!isSameFile) {
-            console.log(`Ignoring Event type is: ${eventType} Filename provided: ${filename} Same file: ${isSameFile}  ${filenameWithFullPath} ${inp}`);
+            logger.debug(`Ignoring Event type is: ${eventType} Filename provided: ${filename} Same file: ${isSameFile}  ${filenameWithFullPath} ${inp}`);
             return;
         }
 
-        console.log(`File changed Event type is: ${eventType} Filename provided: ${filename} Same file: ${isSameFile}`);
+        logger.debug(`File changed Event type is: ${eventType} Filename provided: ${filename} Same file: ${isSameFile}`);
 
         if (debounceTimer) {
             clearTimeout(debounceTimer);
@@ -44,7 +46,7 @@ function startWatching(filenameWithFullPath) {
     });
 
     watcher.on('error', (err) => {
-        console.log('Error: ' + err);
+        logger.error('Error: ' + err);
     });
 
 
@@ -70,10 +72,11 @@ async function processNextChange() {
 
 
     } catch (err) {
-        console.error('Error during formatAndBuild:', err);
+        logger.error('Error during formatAndBuild:'+ err);
     } finally {
         isBuilding = false;
-        console.log('Done building reloadServer called');
+        logger.info(chalk.green('Updated Slides'));
+
 
         if (changeQueue.length > 0) {
             // Process the next change in the queue
@@ -93,7 +96,7 @@ export function watchFile(filename) {
         startWatching(filename)
 
     }).catch((err) => {
-        console.log(err)
+        logger.error(err)
     });
 
     //   console.log('Watching for file changes...');
@@ -103,7 +106,7 @@ export function watchFile(filename) {
 export function stopSourceWatcher() {
     if (watcher) {
         watcher.close();
-        console.log('Stopped watching the file.');
+        logger.debug('Stopped watching the file.');
     }
 
     if (debounceTimer) {

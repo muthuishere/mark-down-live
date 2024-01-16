@@ -105,6 +105,7 @@ export async function formatAndBuildBufferFile(markdownFile) {
 
 
         await generateFullPresentation(markdownFile);
+        await generateTypeWritingIndex(indexFilePath, "index.html");
 
     }, 100);
 

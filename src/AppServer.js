@@ -92,23 +92,25 @@ export class AppServer {
 
     setupWebSocket() {
         this.wss.on('connection', ws => {
-            console.log('Client connected');
+            // console.log('Client connected');
             ws.on('message', message => {
-                console.log(`Received: ${message}`);
+                // console.log(`Received: ${message}`);
                 this.wss.clients.forEach(client => {
                     if (client !== ws && client.readyState === WebSocket.OPEN) {
                         client.send(message);
                     }
                 });
             });
-            ws.on('close', () => console.log('Client disconnected'));
+            ws.on('close', () => {
+                //console.log('Client disconnected')
+            });
         });
     }
 
     start() {
 
         this.server.listen(this.port, () => {
-            console.error(chalk.greenBright(`Present Makrdown Server running on port ${this.port}`));
+            // console.log(chalk.greenBright(`Present Markdown Server running on port http://localhost:${this.port}`));
         });
 
         this.server.on('error', (err) => {
@@ -160,7 +162,7 @@ export async function startAppServer(outputfolder, port) {
 
 export async function sendMessageToWebSockets(msg) {
 
-console.log('sendMessageToWebSockets', msg);
+// console.log('sendMessageToWebSockets', msg);
     server.sendMessage(msg);
 
 }

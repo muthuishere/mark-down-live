@@ -1,6 +1,8 @@
 import fs, {promises as fsPromises} from "fs";
 import path from "path";
 import marpCLI from '@marp-team/marp-cli/lib/marp-cli.js';
+
+
 import {getCurrentProjectFolder} from "./os_utils.js";
 
 let projectRunningFolder = null;
@@ -17,31 +19,14 @@ export function setProjectRunningFolder(folder) {
 export function getOutputFolder() {
 
     let outputfolder = getCurrentProjectFolder() + "/dist/";
-    // let outputfolder = getHomeFolder() + "/.slidewatcher/";
 
-    //get home folder
-    // const homedir = getHomeFolder() + "/.slidewatcher/";
-    // if(projectRunningFolder !== null){
-    //     outputfolder = projectRunningFolder + "/dist/";
-    // }
 
-    // console.log("Output Folder " + outputfolder)
-    // outputfolder = outputfolder
 
     if (fs.existsSync(outputfolder) === false)
         fs.mkdirSync(outputfolder, {recursive: true})
     return outputfolder;
-    //Serving "/Users/muthuishere/.slidewatcher/" at http://127.0.0.1:9500
-    //[  INFO ] Converting 1 markdown...
-    // [  INFO ] ../../../.slidewatcher/programming.md => dist/programming.html
-    // All the files located on /Users/muthuishere/.slidewatcher/
-    // Output Folder /Users/muthuishere/.slidewatcher/
-    // converting to html /Users/muthuishere/.slidewatcher/index.md
-    // [  INFO ] Converting 1 markdown...
-    // [  INFO ] ../../../.slidewatcher/index.md => dist/index.html
 
 
-//    Serving "/Users/muthuishere/muthu/gitworkspace/slidepresenter/dist/" at http://127.0.0.1:9500
 
 }
 
@@ -84,10 +69,7 @@ export function copyFilesByExtension(sourceDir, targetDir, extensions) {
 }
 
 
-// Example usage:
 
-
-// Sample function to replace ###CONTENTS###
 export const formatContents = (data) => {
     // Use a regular expression to match lines that start with '#', followed by a space, followed by one to three numbers, another space, and then a '-'
 
@@ -173,12 +155,34 @@ export async function convertToHtmlWithFileName(filename, htmlFile) {
     const outputfolder = getOutputFolder()
     const outputfile = outputfolder + htmlFile;
 
-
+//{ onlyScanning: true }
     const args = [filename, '-o', outputfile];
 
-    await marpCLI.cliInterface(args)
+await buildWithMarpCli(args)
+
+    // await marpCLI.cliInterface(args)
     return htmlFile;
 
+
+}
+
+export async function buildWithMarpCli(args) {
+    const originalConsoleLog = console.warn;
+
+// Override console.log to do nothing
+    console.warn = function () {
+    };
+
+    try {
+        // Call your function without console.log output
+        await marpCLI.cliInterface(args);
+    } catch (e) {
+        // Handle any errors that may occur
+        console.error(e);
+    } finally {
+        // Restore the original console.log function
+        console.warn = originalConsoleLog;
+    }
 
 }
 
