@@ -6,7 +6,7 @@ import path from "path";
 import os from "os";
 import fs from 'fs';
 import chalk from "chalk";
-
+import net from 'net';
 const isWin = process.platform === "win32";
 
 export function getHomeFolder() {
@@ -96,6 +96,28 @@ export function openFileInSystem(filePath) {
             }
             // console.log(chalk.green(`opened successfully: ${filePath}`));
             resolve();
+        });
+    });
+}
+
+
+
+export function findFreePort(startAt = 3000) {
+    return new Promise((resolve, reject) => {
+        const server = net.createServer();
+        server.listen(startAt);
+
+        server.on('listening', () => {
+            const port = server.address().port;
+            server.close(() => resolve(port));
+        });
+
+        server.on('error', (err) => {
+            if (err.code === 'EADDRINUSE') {
+                resolve(findFreePort(startAt + 1)); // Try the next port
+            } else {
+                reject(err);
+            }
         });
     });
 }

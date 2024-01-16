@@ -1,9 +1,13 @@
 import path from "path";
 
-export const PORT = 9500;
+export let PORT = 9500;
 
 export function getPort() {
     return PORT;
+}
+export function setPort(port) {
+    PORT = port;
+
 }
 
 export function getIndexUrl() {

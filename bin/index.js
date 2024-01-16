@@ -2,14 +2,14 @@
 
 'use strict'
 
-import {fileExists, getFullPath} from "../src/shared/os_utils.js";
+import {fileExists, findFreePort, getFullPath} from "../src/shared/os_utils.js";
 import {stopSourceWatcher, watchFile} from "../src/sourcewatcher.js";
 import {startServer} from "../src/server.js";
 import path from "path";
 import fs from "fs";
 import {getOutputFolder} from "../src/shared/slidebuild.js";
 import {startAppServer, stopAppServer} from "../src/AppServer.js";
-import {getPort} from "../src/shared/config.js";
+import {getPort, setPort} from "../src/shared/config.js";
 import chalk from "chalk";
 
 async function main(filename) {
@@ -31,7 +31,9 @@ async function main(filename) {
         const folder = getOutputFolder();
 
 
-        await startAppServer(folder,getPort())
+        const port = await findFreePort(getPort()); // You can specify a starting port, e.g., findFreePort(8000)
+setPort(port)
+        await startAppServer(folder,port)
 
         console.log(chalk.greenBright(`Present Markdown Server running on port http://localhost:${getPort()} , Update the file ${fullPathOfFileName} to see the changes`));
 
