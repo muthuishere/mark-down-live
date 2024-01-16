@@ -1,6 +1,10 @@
 import fs from 'fs';
-import {formatAndBuild} from "./htmlcreator.js";
+import {formatAndBuildBufferFile, formatAndBuildInitialFile} from "./htmlcreator.js";
 import path from "path";
+
+
+import {openFileInSystem} from "./shared/os_utils.js";
+import {getIndexUrl} from "./shared/config.js";
 
 let timeout;
 let watcher
@@ -10,8 +14,9 @@ let debounceTimer = null;
 
 function startWatching(filenameWithFullPath) {
 
+
     console.log(`Watching for file changes... ${filenameWithFullPath}`);
-   const folder = path.dirname(filenameWithFullPath);
+    const folder = path.dirname(filenameWithFullPath);
     const filename = path.basename(filenameWithFullPath);
 
     watcher = fs.watch(filenameWithFullPath, (eventType, currentFile) => {
@@ -41,6 +46,8 @@ function startWatching(filenameWithFullPath) {
     watcher.on('error', (err) => {
         console.log('Error: ' + err);
     });
+
+
 }
 
 function enqueueChange(filename) {
@@ -58,11 +65,16 @@ async function processNextChange() {
     isBuilding = true;
 
     try {
-        await formatAndBuild(filename);
+        await formatAndBuildBufferFile(filename);
+        // send to websocket
+
+
     } catch (err) {
         console.error('Error during formatAndBuild:', err);
     } finally {
         isBuilding = false;
+        console.log('Done building reloadServer called');
+
         if (changeQueue.length > 0) {
             // Process the next change in the queue
             processNextChange();
@@ -70,15 +82,19 @@ async function processNextChange() {
     }
 }
 
-export  function watchFile(filename) {
 
-     formatAndBuild(filename).then(() => {
+export function watchFile(filename) {
+    // formatAndBuildInitialFile(filename);(filename).then(() => {
 
-         startWatching(filename)
+    formatAndBuildInitialFile(filename).then(() => {
 
-     }).catch((err) => {
-            console.log(err)
-     });
+        openFileInSystem(getIndexUrl())
+
+        startWatching(filename)
+
+    }).catch((err) => {
+        console.log(err)
+    });
 
     //   console.log('Watching for file changes...');
 
@@ -93,7 +109,7 @@ export function stopSourceWatcher() {
     if (debounceTimer) {
         clearTimeout(debounceTimer);
     }
-    if(changeQueue.length > 0){
+    if (changeQueue.length > 0) {
         changeQueue = [];
     }
 

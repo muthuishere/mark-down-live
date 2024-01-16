@@ -1,7 +1,12 @@
-import {convertToHtml, copyAssetsToOutputFolder, getOutputFolder, replaceContentsInMarkdown} from "../shared/slidebuild.js";
+import {
+    convertToHtml,
+    copyAssetsToOutputFolder,
+    getOutputFolder,
+    replaceContentsInMarkdown
+} from "../shared/slidebuild.js";
 import path from "path";
 
-export default async function generate( markdownFile) {
+export default async function generate(markdownFile) {
 
 
     const srcfolder = path.dirname(markdownFile);

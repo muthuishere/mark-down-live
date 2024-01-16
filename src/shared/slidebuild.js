@@ -2,11 +2,10 @@ import fs, {promises as fsPromises} from "fs";
 import path from "path";
 import marpCLI from '@marp-team/marp-cli/lib/marp-cli.js';
 import {getCurrentProjectFolder} from "./os_utils.js";
-import chalk from "chalk";
 
 let projectRunningFolder = null;
 
-export function setProjectRunningFolder(folder){
+export function setProjectRunningFolder(folder) {
 
     if (fs.existsSync(folder) === false)
         throw new Error("Folder does not exist " + folder)
@@ -14,10 +13,11 @@ export function setProjectRunningFolder(folder){
     projectRunningFolder = folder;
 
 }
+
 export function getOutputFolder() {
 
-      let outputfolder = getCurrentProjectFolder() + "/dist/";
-   // let outputfolder = getHomeFolder() + "/.slidewatcher/";
+    let outputfolder = getCurrentProjectFolder() + "/dist/";
+    // let outputfolder = getHomeFolder() + "/.slidewatcher/";
 
     //get home folder
     // const homedir = getHomeFolder() + "/.slidewatcher/";
@@ -25,8 +25,8 @@ export function getOutputFolder() {
     //     outputfolder = projectRunningFolder + "/dist/";
     // }
 
-    console.log("Output Folder " + outputfolder)
-     // outputfolder = outputfolder
+    // console.log("Output Folder " + outputfolder)
+    // outputfolder = outputfolder
 
     if (fs.existsSync(outputfolder) === false)
         fs.mkdirSync(outputfolder, {recursive: true})
@@ -41,7 +41,6 @@ export function getOutputFolder() {
     // [  INFO ] ../../../.slidewatcher/index.md => dist/index.html
 
 
-
 //    Serving "/Users/muthuishere/muthu/gitworkspace/slidepresenter/dist/" at http://127.0.0.1:9500
 
 }
@@ -49,11 +48,9 @@ export function getOutputFolder() {
 export async function copyAssetsToOutputFolder(srcfolder) {
     const outputfolder = getOutputFolder()
 
-    await copyFilesByExtension(srcfolder, outputfolder, ['png','gif', 'svg', 'jpg','css','scss']);
+    await copyFilesByExtension(srcfolder, outputfolder, ['png', 'gif', 'svg', 'jpg', 'css', 'scss']);
 
 }
-
-
 
 
 export function copyFilesByExtension(sourceDir, targetDir, extensions) {
@@ -109,7 +106,7 @@ export const formatContents = (data) => {
         // Replace spaces with '-'
         newLine = newLine.replace(/\s+/g, '-');
         return `1. [${header}](#${newLine})`;
-        ;
+
     });
 
     // Convert the processed matches to an array and join by new line
@@ -157,34 +154,35 @@ export const replaceContentsInMarkdown = (markdownFile, resultFile) => {
 };
 
 
-
 export async function convertToHtml(filename) {
 
-     console.log("converting to html",filename);
-    const folder = path.dirname(filename);
-    const basename = path.basename(filename);
-    const outputfolder = getOutputFolder()
-    let htmlFile = basename.replace(".md", ".html");
-    const outputfile = outputfolder  + htmlFile;
 
+    const basename = path.basename(filename);
+
+    let htmlFile = basename.replace(".md", ".html");
+
+
+    return convertToHtmlWithFileName(filename, htmlFile);
+
+
+}
+
+export async function convertToHtmlWithFileName(filename, htmlFile) {
+
+
+    const outputfolder = getOutputFolder()
+    const outputfile = outputfolder + htmlFile;
 
 
     const args = [filename, '-o', outputfile];
-
-    // console.log("converting to html",args);
-
-    console.log(chalk.green("Full presentation available on " + outputfile))
 
     await marpCLI.cliInterface(args)
     return htmlFile;
 
 
-
-
-
 }
 
-export async function generateHtmlWithScript(filename, scriptFile, generatedFileName  ) {
+export async function generateHtmlWithScript(filename, scriptFile, generatedFileName) {
     // console.log("Converting to HTML", filename);
     const outputfolder = getOutputFolder()
     const tempHtmlFile = outputfolder + "temp.html";

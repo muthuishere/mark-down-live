@@ -189,8 +189,8 @@ Welcome to thiing, so what will happen, very soon something could. why should yo
 
 
 ---
-
 # 24 - Programming Communities
-- There are many programming communities around the world
-- Some are online, some are in-person, who 
-- What am i trying to say here?
+ - what do i want to update newly apart from what i have magizhini
+ - Is it working
+ - yes it is working
+

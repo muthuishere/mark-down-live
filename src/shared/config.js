@@ -2,6 +2,10 @@ import path from "path";
 
 export const PORT = 9500;
 
+export function getPort() {
+    return PORT;
+}
+
 export function getIndexUrl() {
     return `http://localhost:${PORT}/`;
 }

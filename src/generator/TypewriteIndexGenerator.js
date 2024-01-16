@@ -10,19 +10,40 @@ export default async function generate(indexFilePath, generatedFileName = "type.
 
         const assetsFolder = getCurrentProjectFolder() + "/assets"
         await copyAssetsToOutputFolder(assetsFolder);
-        //
-        const injectScriptFile = assetsFolder+ "/type.template.js"
-        const hideScriptFile = assetsFolder+ "/hide.template.js"
-        const urls =[ "https://unpkg.com/typewriter-effect@latest/dist/core.js"]
-        await    generateHtmlWithMultipleScripts(urls,indexFilePath,hideScriptFile,injectScriptFile,generatedFileName);
+
+        await generateHtmlWithMultipleScripts(indexFilePath, generatedFileName);
         // console.log('type.md has been created successfully');
         return indexFilePath;
     } catch (err) {
-        console.log(chalk.red( 'Error when generating  :' + generatedFileName + err));
+        console.log(chalk.red('Error when generating  :' + generatedFileName + err));
     }
 }
 
-export async function generateHtmlWithMultipleScripts(urls,filename, hideScriptFile, injectScriptFile, generatedFileName  ) {
+async function generateHtmlContent(tempHtmlFile) {
+    const assetsFolder = getCurrentProjectFolder() + "/assets"
+    let htmlContent = await fsPromises.readFile(tempHtmlFile, 'utf8');
+
+    //read the script file
+    let injectScriptContent = await fsPromises.readFile(assetsFolder + "/type.template.js", 'utf8');
+    let moduleScriptContent = await fsPromises.readFile(assetsFolder + "/type.module.template.js", 'utf8');
+    let hideScriptContent = await fsPromises.readFile(assetsFolder + "/hide.template.js", 'utf8');
+
+    // Script to be inserted
+    let scriptTag = '<script>' + hideScriptContent + '</script>';
+    scriptTag = scriptTag + '<script type="module">' + moduleScriptContent + '</script>';
+    scriptTag = scriptTag + '<script src="' + "https://unpkg.com/typewriter-effect@latest/dist/core.js" + '"></script>';
+
+
+    scriptTag = scriptTag + '<script>' + injectScriptContent + '</script>';
+
+
+    return htmlContent.replace('</body>', `${scriptTag}\n</body>`);
+}
+
+export async function generateHtmlWithMultipleScripts(filename, generatedFileName) {
+    const assetsFolder = getCurrentProjectFolder() + "/assets"
+
+
     console.log("Converting to HTML", filename);
     const outputfolder = getOutputFolder()
     const tempHtmlFile = outputfolder + "temp.html";
@@ -33,23 +54,7 @@ export async function generateHtmlWithMultipleScripts(urls,filename, hideScriptF
     await marpCLI.cliInterface(args);
 
     // Read the temp HTML file
-    let htmlContent = await fsPromises.readFile(tempHtmlFile, 'utf8');
-
-    //read the script file
-    let injectScriptContent = await fsPromises.readFile(injectScriptFile, 'utf8');
-    let hideScriptContent = await fsPromises.readFile(hideScriptFile, 'utf8');
-
-    // Script to be inserted
-    let scriptTag = '<script>' + hideScriptContent + '</script>';
-
-    urls.forEach(url => {
-        scriptTag = scriptTag + '<script src="' + url + '"></script>';
-    })
-
-    scriptTag = scriptTag + '<script>' + injectScriptContent + '</script>';
-
-    // Insert the script tag before the closing </body> tag
-    htmlContent = htmlContent.replace('</body>', `${scriptTag}\n</body>`);
+    let htmlContent = await generateHtmlContent(tempHtmlFile);
 
     // console.log("Writing to index.html", finalHtmlFile);
     // Write the modified content to index.html
