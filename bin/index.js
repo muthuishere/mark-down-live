@@ -8,6 +8,9 @@ import {startServer} from "../src/server.js";
 import path from "path";
 import fs from "fs";
 import {getOutputFolder} from "../src/shared/slidebuild.js";
+import {startAppServer, stopAppServer} from "../src/AppServer.js";
+import {getPort} from "../src/shared/config.js";
+import chalk from "chalk";
 
 async function main(filename) {
 
@@ -28,9 +31,9 @@ async function main(filename) {
         const folder = getOutputFolder();
 
 
-        await startServer(folder)
+        await startAppServer(folder,getPort())
 
-
+        console.log(chalk.greenBright(`Present Markdown Server running on port http://localhost:${getPort()} , Update the file ${fullPathOfFileName} to see the changes`));
 
 
     }else {
@@ -44,6 +47,7 @@ async function main(filename) {
 function cleanup() {
     console.log("Cleaning up before exit");
     stopSourceWatcher();
+    stopAppServer();
     process.exit(0);
 }
 

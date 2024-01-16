@@ -90,11 +90,11 @@ export function openFileInSystem(filePath) {
 
         exec(command, (err) => {
             if (err) {
-                console.log(chalk.red(`Failed to open file: ${filePath}`, err));
+                console.log(chalk.red(`Failed to open : ${filePath}`, err));
                 resolve();
                 return;
             }
-            console.log(chalk.green(`File opened successfully: ${filePath}`));
+            // console.log(chalk.green(`opened successfully: ${filePath}`));
             resolve();
         });
     });

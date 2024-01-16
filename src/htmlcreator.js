@@ -1,16 +1,16 @@
-import fs from 'fs';
 import fsPromises from 'fs/promises';
 
 import path from 'path';
 import {logger} from "./shared/logger.js";
 import {getFullPresentationUrl, getIndexUrl} from "./shared/config.js";
 import chalk from "chalk";
-import {getOutputFolder} from "./shared/slidebuild.js";
+import {convertToHtmlWithFileName, getOutputFolder} from "./shared/slidebuild.js";
 import generateFullPresentation from './generator/FullPresentationGenerator.js';
-import generateMainIndex from './generator/MainIndexGenerator.js';
 import generateTypeWritingIndex from './generator/TypewriteIndexGenerator.js';
-
-export  async function getIndexSlideContent(markDownFilePath) {
+import {openFileInSystem} from "./shared/os_utils.js";
+import {sendMessageToWebSockets} from "./AppServer.js";
+const BUFFER_FILE_NAME = "buffer.html";
+export async function getIndexSlideContent(markDownFilePath) {
     try {
 
         // Read the input file
@@ -31,18 +31,7 @@ export  async function getIndexSlideContent(markDownFilePath) {
         newIndexContent = newIndexContent.replace("paginate: \"true\"", "paginate: \"false\"");
         return newIndexContent;
 
-        // Determine the path for index.md in the same directory
-        // const directory = path.dirname(markDownFilePath);
-        // const indexFilePath = path.join(directory, 'index.md');
-        //
-        // // Write the new index.md file
-        // await fsPromises.writeFile(indexFilePath, newIndexContent, 'utf8');
-        // const assetsFolder = getCurrentProjectFolder() + "/assets"
-        // await copyAssetsFrom(assetsFolder);
-        //
 
-        // console.log('index.md has been created successfully');
-        // return indexFilePath;
     } catch (err) {
         console.error('Error:', err);
         throw err;
@@ -50,8 +39,8 @@ export  async function getIndexSlideContent(markDownFilePath) {
 }
 
 
-async function saveIndexFile( markdownFile) {
-    const indexContent = await    getIndexSlideContent(markdownFile);
+async function saveIndexFile(markdownFile) {
+    const indexContent = await getIndexSlideContent(markdownFile);
     const outputfolder = getOutputFolder()
     const indexFilePath = path.join(outputfolder, 'index.md');
 
@@ -60,43 +49,70 @@ async function saveIndexFile( markdownFile) {
     return indexFilePath;
 }
 
-export async function formatAndBuild(markdownFile) {
 
-    // console.log("formatting", markdownFile);
-    // get parent folder from markdown file
-    // get folder name
-    const folder = path.dirname(markdownFile);
+export async function formatAndBuildInitialFile(markdownFile) {
 
-
-    if (fs.existsSync(markdownFile) === false)
-        throw new Error("Markdown file does not exist!");
 
     const outputfolder = getOutputFolder()
     const markdownFileFullPath = outputfolder + path.basename(markdownFile);
 
-   const  indexFilePath= await saveIndexFile(markdownFile);
+    const indexFilePath = await saveIndexFile(markdownFile);
 
 
-    await generateTypeWritingIndex(indexFilePath ,"index.html");
+    await generateTypeWritingIndex(indexFilePath, "index.html");
 
-    // if( 1 === 1)
-    //     return
+    await generateFullPresentation(markdownFile);
 
 
-    // await generateAnimatedHandIndex(indexFilePath);
+    logger.info(chalk.green("full presentation available on " + getFullPresentationUrl(markdownFile)))
+    logger.info(chalk.green("Live presentation available on " + getIndexUrl()))
+
+    // open Index File
+
+
+
+    return markdownFileFullPath;
+}
+
+
+
+async function sendBufferUpdatedMessage() {
+    const outputfolder = getOutputFolder()
+    const outputfile = outputfolder + BUFFER_FILE_NAME;
+
+    const content = await fsPromises.readFile(outputfile, 'utf8');
+    await sendMessageToWebSockets({"filename": BUFFER_FILE_NAME, "action": "updateIndexPage", payload: content});
+
+
+}
+export async function formatAndBuildBufferFile(markdownFile) {
+
+
+    const outputfolder = getOutputFolder()
+
+
+    const markdownFileFullPath = outputfolder + path.basename(markdownFile);
+
+    const indexFilePath = await saveIndexFile(markdownFile);
+
+
+    await convertToHtmlWithFileName(indexFilePath, BUFFER_FILE_NAME);
+
+    await   sendBufferUpdatedMessage();
+
 
     setTimeout(async () => {
 
-        await generateMainIndex(indexFilePath,"plain.html");
+
         await generateFullPresentation(markdownFile);
+        await generateTypeWritingIndex(indexFilePath, "index.html");
 
     }, 100);
 
 
-   logger.info(chalk.green("full presentation available on "+getFullPresentationUrl(markdownFile)))
-    logger.info(chalk.green("Live presentation available on " + getIndexUrl()))
-
     return markdownFileFullPath;
+
+
 }
 
 

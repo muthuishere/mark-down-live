@@ -6,13 +6,16 @@ import path from 'path';
 import {fileExists, getCurrentProjectFolder} from "./os_utils.js";
 
 export const logger = winston.createLogger({
-     level: 'info',
+    level: 'info',
     format: winston.format.json(),
-    defaultMeta: { service: 'slidepresenter' },
+    defaultMeta: {},
     transports: [
 
-        new winston.transports.File({ filename: getLogFolder() + '/error.log', level: 'error' }),
-        new winston.transports.File({ filename: getLogFolder() + '/app.log' }),
+        new winston.transports.Console({
+            format: winston.format.simple()
+        }),
+        new winston.transports.File({filename: getLogFolder() + '/error.log', level: 'error'}),
+        new winston.transports.File({filename: getLogFolder() + '/app.log'}),
     ],
 });
 
@@ -27,7 +30,7 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 // Replace this with the path to your log files
-const logDirectory =  getLogFolder();
+const logDirectory = getLogFolder();
 
 // Async arrow function to delete all .log files
 export const deleteLogFiles = async () => {
@@ -44,18 +47,20 @@ export const deleteLogFiles = async () => {
     }
 };
 
-export  function  getLogFolder(){
+export function getLogFolder() {
     return getCurrentProjectFolder() + "/logs";
 }
 
-export async function  initLogFolder(){
+export async function initLogFolder() {
     let s = getCurrentProjectFolder() + "/logs";
-  const isExists = await fileExists(s);
+    const isExists = await fileExists(s);
 
-    if (!isExists){
-await        fs.mkdir(s, { recursive: true });
+    if (!isExists) {
+        await fs.mkdir(s, {recursive: true});
     }
     return s;
 }
 
-initLogFolder().then(r => console.log("Log folder created at " + r)).catch(e => console.error(e))
+initLogFolder().then(r => {
+    //console.log("Log folder created at " + r)
+}).catch(e => console.error(e))
