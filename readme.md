@@ -11,7 +11,7 @@ Effortlessly stream and present your Markdown slides live in-browser with Presen
 - **Full Presentation Download**: Download your entire presentation anytime.
 
 ## Demo
-[![PresentMarkdownNow Demo](assets%2Fpresentnow.png)](https://youtu.be/Uaxzf9ZFd_k)
+[![PresentMarkdownNow Demo](testdata/assets/presentnow.png)](https://youtu.be/Uaxzf9ZFd_k)
 
 
 ## Installation
