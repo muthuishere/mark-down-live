@@ -7,6 +7,7 @@ import os from "os";
 import fs from 'fs';
 import chalk from "chalk";
 import net from 'net';
+
 const isWin = process.platform === "win32";
 
 export function getHomeFolder() {
@@ -99,7 +100,6 @@ export function openFileInSystem(filePath) {
         });
     });
 }
-
 
 
 export function findFreePort(startAt = 3000) {

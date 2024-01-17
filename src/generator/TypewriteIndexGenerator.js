@@ -46,7 +46,7 @@ export async function generateHtmlWithMultipleScripts(filename, generatedFileNam
     const assetsFolder = getCurrentProjectFolder() + "/assets"
 
 
-    logger.debug("Converting to HTML" +filename);
+    logger.debug("Converting to HTML" + filename);
     const outputfolder = getOutputFolder()
     const tempHtmlFile = outputfolder + "temp.html";
     const finalHtmlFile = outputfolder + generatedFileName;

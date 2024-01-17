@@ -4,13 +4,13 @@ import path from "path";
 
 
 import {openFileInSystem} from "./shared/os_utils.js";
-import {getIndexUrl} from "./shared/config.js";
+import {cancelCurrentBuild, getIndexUrl, isBuildingStatus, startBuilding, stopBuilding} from "./shared/config.js";
 import {logger} from "./shared/logger.js";
 import chalk from "chalk";
 
 let timeout;
 let watcher
-let isBuilding = false;
+
 let changeQueue = [];
 let debounceTimer = null;
 
@@ -40,9 +40,10 @@ function startWatching(filenameWithFullPath) {
         }
 
         debounceTimer = setTimeout(() => {
+            logger.debug(`Debounce timer triggered`);
             enqueueChange(filenameWithFullPath);
             processNextChange();
-        }, 2000); // Debounce period
+        }, 100); // Debounce period
     });
 
     watcher.on('error', (err) => {
@@ -53,29 +54,39 @@ function startWatching(filenameWithFullPath) {
 }
 
 function enqueueChange(filename) {
-    if (!isBuilding) {
-        changeQueue.push(filename);
+    if (isBuildingStatus()) {
+        // Signal to cancel the current build
+        logger.debug(`cancelCurrentBuild`);
+        cancelCurrentBuild();
     }
+
+
+    changeQueue.push(filename);
+
 }
 
 async function processNextChange() {
-    if (isBuilding || changeQueue.length === 0) {
-        return;
-    }
-
-    const filename = changeQueue.shift();
-    isBuilding = true;
 
     try {
+
+        if (changeQueue.length === 0) {
+            return;
+        }
+
+
+        const filename = changeQueue.shift();
+        startBuilding()
+
+
         await formatAndBuildBufferFile(filename);
         // send to websocket
-
+        logger.info(chalk.green('Changes applied to presentation.'));
 
     } catch (err) {
-        logger.error('Error during formatAndBuild:'+ err);
+        console.error(err)
+        logger.error('Error during formatAndBuild:' + err);
     } finally {
-        isBuilding = false;
-        logger.info(chalk.green('Updated Slides'));
+        stopBuilding()
 
 
         if (changeQueue.length > 0) {

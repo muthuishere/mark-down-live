@@ -21,11 +21,9 @@ export function getOutputFolder() {
     let outputfolder = getCurrentProjectFolder() + "/dist/";
 
 
-
     if (fs.existsSync(outputfolder) === false)
         fs.mkdirSync(outputfolder, {recursive: true})
     return outputfolder;
-
 
 
 }
@@ -67,7 +65,6 @@ export function copyFilesByExtension(sourceDir, targetDir, extensions) {
         }
     }
 }
-
 
 
 export const formatContents = (data) => {
@@ -158,7 +155,7 @@ export async function convertToHtmlWithFileName(filename, htmlFile) {
 //{ onlyScanning: true }
     const args = [filename, '-o', outputfile];
 
-await buildWithMarpCli(args)
+    await buildWithMarpCli(args)
 
     // await marpCLI.cliInterface(args)
     return htmlFile;

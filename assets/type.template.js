@@ -88,17 +88,38 @@ function handleSingleElement(lastElement, totalNodesInSection) {
     let contentsToBeTyped = null;
     let elementToAnimate = null;
 
+    let updatedStoredElementDetails = storedElementDetails;
+    let partialMatchFound = false;
 
-    if (currentElementDetails.includes(storedElementDetails)) {
-        //  // then split the innerHtml and create two variables last and current
-        const last = storedElementDetails;
-        contentsToBeTyped = currentElementDetails.replace(storedElementDetails, "");
-        lastElement.innerHTML = last;
+    while (updatedStoredElementDetails.length > 2 && !partialMatchFound) {
+        if (currentElementDetails.includes(updatedStoredElementDetails)) {
+            partialMatchFound = true;
+        } else {
+            updatedStoredElementDetails = updatedStoredElementDetails.substring(0, updatedStoredElementDetails.length - 1);
+        }
+    }
+
+
+    // if (currentElementDetails.includes(storedElementDetails)) {
+    //     //  // then split the innerHtml and create two variables last and current
+    //     const last = storedElementDetails;
+    //     contentsToBeTyped = currentElementDetails.replace(storedElementDetails, "");
+    //     lastElement.innerHTML = last;
+    //     elementToAnimate = document.createElement("span");
+    //     elementToAnimate.innerHTML = "";
+    //     lastElement.appendChild(elementToAnimate);
+    //
+    // }
+    if (partialMatchFound) {
+        // Handle partial match
+        contentsToBeTyped = currentElementDetails.replace(updatedStoredElementDetails, "");
+        lastElement.innerHTML = updatedStoredElementDetails;
         elementToAnimate = document.createElement("span");
         elementToAnimate.innerHTML = "";
         lastElement.appendChild(elementToAnimate);
+    }
 
-    } else {
+    else {
 
         contentsToBeTyped = lastElement.innerHTML
         lastElement.innerHTML = '';

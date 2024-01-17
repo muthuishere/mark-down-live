@@ -24,9 +24,9 @@ export const logger = winston.createLogger({
 
 if (process.env.NODE_ENV === 'test') {
     logger.level = 'debug';
-    logger.add(new winston.transports.Console({
-        format: winston.format.simple(),
-    }));
+    // logger.add(new winston.transports.Console({
+    //     format: winston.format.simple(),
+    // }));
 }
 
 // Replace this with the path to your log files

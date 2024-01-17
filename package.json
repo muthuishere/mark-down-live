@@ -1,13 +1,13 @@
 {
   "name": "present-markdown-now",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Effortlessly stream and present your Markdown slides live in-browser with MarkDownLive. Ideal for educators, presenters, and anyone needing to create dynamic, real-time presentations. Simply write in Markdown, and let MarkDownLive handle the live streaming magic!",
   "main": "bin/index.js",
   "type": "module",
   "scripts": {
     "coverage": "nyc npm run test",
     "test": "mocha --experimental-loader=@istanbuljs/esm-loader-hook 'src/**/*.test.js' --recursive --timeout 60000 ",
-    "run-template": "node bin/index.js testdata/mockdocs/programming.md",
+    "run-template": "NODE_ENV=test node bin/index.js testdata/mockdocs/programming.md",
     "generate-license": "generate-license-file --input package.json --output ./THIRD-PARTY-LICENSES.txt --overwrite",
     "publish-package": "npm publish"
   },

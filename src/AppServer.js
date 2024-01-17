@@ -137,7 +137,7 @@ export class AppServer {
         this.wss.clients.forEach(client => {
             if (client.readyState === WebSocket.OPEN) {
 
-                if(typeof message === 'object'){
+                if (typeof message === 'object') {
                     message = JSON.stringify(message);
                 }
 

@@ -2,14 +2,15 @@ import fsPromises from 'fs/promises';
 
 import path from 'path';
 import {logger} from "./shared/logger.js";
-import {getFullPresentationUrl, getIndexUrl} from "./shared/config.js";
+import {getFullPresentationUrl, getIndexUrl, shouldCancelCurrentBuild} from "./shared/config.js";
 import chalk from "chalk";
 import {convertToHtmlWithFileName, getOutputFolder} from "./shared/slidebuild.js";
 import generateFullPresentation from './generator/FullPresentationGenerator.js';
 import generateTypeWritingIndex from './generator/TypewriteIndexGenerator.js';
-import {openFileInSystem} from "./shared/os_utils.js";
 import {sendMessageToWebSockets} from "./AppServer.js";
+
 const BUFFER_FILE_NAME = "buffer.html";
+
 export async function getIndexSlideContent(markDownFilePath) {
     try {
 
@@ -70,10 +71,8 @@ export async function formatAndBuildInitialFile(markdownFile) {
     // open Index File
 
 
-
     return markdownFileFullPath;
 }
-
 
 
 async function sendBufferUpdatedMessage() {
@@ -85,6 +84,7 @@ async function sendBufferUpdatedMessage() {
 
 
 }
+
 export async function formatAndBuildBufferFile(markdownFile) {
 
 
@@ -95,15 +95,25 @@ export async function formatAndBuildBufferFile(markdownFile) {
 
     const indexFilePath = await saveIndexFile(markdownFile);
 
+    if (shouldCancelCurrentBuild()) {
+        // Clean up if necessary
+        throw new Error('Build was canceled');
+    }
 
     await convertToHtmlWithFileName(indexFilePath, BUFFER_FILE_NAME);
+    if (shouldCancelCurrentBuild()) {
+        // Clean up if necessary
+        throw new Error('Build was canceled');
+    }
 
-    await   sendBufferUpdatedMessage();
+    await sendBufferUpdatedMessage();
 
 
     setTimeout(async () => {
 
-
+        if (shouldCancelCurrentBuild()) {
+            return
+        }
         await generateFullPresentation(markdownFile);
         await generateTypeWritingIndex(indexFilePath, "index.html");
 

@@ -190,4 +190,5 @@ Welcome to thiing, so what will happen, very soon something could. why should yo
 
 ---
 # What is Golang
-- A language is called high performance programming language
+- A language is called why should you work  this. 
+
