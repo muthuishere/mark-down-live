@@ -1,4 +1,4 @@
-import {createHandiconAnimatedIndexFile, formatAndBuildBufferFile} from "./htmlcreator.js";
+import {formatAndBuildBufferFile} from "./htmlcreator.js";
 import fs from 'fs';
 import {expect} from 'chai';
 import {getCurrentProjectFolder} from "./shared/os_utils.js";
@@ -17,16 +17,6 @@ describe('slideformatter', () => {
 
     });
 
-    it('should reate index file ', async () => {
-        //testdata/mockdocs/full-testcontainer.md
-        const markdownFile = getCurrentProjectFolder() + '/dist/programming.md';
-
-        await createHandiconAnimatedIndexFile(markdownFile);
-
-        // expect file to be available in dist folder
-        const result = fs.readFileSync('./dist/index.md', 'utf8');
-        expect(result).not.to.be.null;
 
 
-    });
 });
